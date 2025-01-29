@@ -162,4 +162,83 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     initializeAnimations();
+
+    // Add scroll to top button
+    const scrollButton = document.createElement('div');
+    scrollButton.className = 'scroll-to-top';
+    scrollButton.innerHTML = '↑';
+    document.body.appendChild(scrollButton);
+
+    // Add scroll indicators
+    const sectionsWithId = document.querySelectorAll('section, .content-grid, .testimonial[id]');
+    const indicatorContainer = document.createElement('div');
+    indicatorContainer.className = 'scroll-indicator-container';
+    
+    sectionsWithId.forEach((section, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'scroll-indicator-dot';
+        const label = document.createElement('span');
+        label.className = 'scroll-label';
+        label.textContent = section.id || `Section ${index + 1}`;
+        dot.appendChild(label);
+        
+        dot.addEventListener('click', () => {
+            section.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        indicatorContainer.appendChild(dot);
+    });
+    
+    document.body.appendChild(indicatorContainer);
+
+    // Handle scroll events
+    window.addEventListener('scroll', () => {
+        // Show/hide scroll button
+        if (window.pageYOffset > 300) {
+            scrollButton.classList.add('visible');
+        } else {
+            scrollButton.classList.remove('visible');
+        }
+
+        // Update active indicators
+        const dots = document.querySelectorAll('.scroll-indicator-dot');
+        sectionsWithId.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2) {
+                dots[index].classList.add('active');
+            } else {
+                dots[index].classList.remove('active');
+            }
+        });
+    });
+
+    // Scroll to top functionality
+    scrollButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Enhance existing scroll behavior
+    const smoothScroll = (target, offset = 80) => {
+        const targetPosition = target.getBoundingClientRect().top;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - offset;
+        
+        window.scrollTo({
+            top: startPosition + distance,
+            behavior: 'smooth'
+        });
+    };
+
+    // Update existing scroll listeners
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').slice(1);
+            const target = document.getElementById(targetId);
+            if (target) smoothScroll(target);
+        });
+    });
 });
