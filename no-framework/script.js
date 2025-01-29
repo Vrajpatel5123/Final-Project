@@ -241,4 +241,112 @@ document.addEventListener('DOMContentLoaded', () => {
             if (target) smoothScroll(target);
         });
     });
+
+    // Enhanced Scroll Controls
+    const sectionsArray = Array.from(document.querySelectorAll('section, .content-grid, .testimonial[id]'));
+    let currentSectionIndex = 0;
+
+    // Function to scroll to specific section
+    const scrollToSection = (index) => {
+        if (index >= 0 && index < sectionsArray.length) {
+            currentSectionIndex = index;
+            sectionsArray[index].scrollIntoView({ behavior: 'smooth' });
+            updateScrollIndicators(index);
+        }
+    };
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        switch(e.key) {
+            case 'ArrowDown':
+            case 'PageDown':
+                e.preventDefault();
+                scrollToSection(currentSectionIndex + 1);
+                break;
+            case 'ArrowUp':
+            case 'PageUp':
+                e.preventDefault();
+                scrollToSection(currentSectionIndex - 1);
+                break;
+            case 'Home':
+                e.preventDefault();
+                scrollToSection(0);
+                break;
+            case 'End':
+                e.preventDefault();
+                scrollToSection(sectionsArray.length - 1);
+                break;
+        }
+    });
+
+    // Mouse wheel control
+    let wheelTimeout;
+    document.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        
+        clearTimeout(wheelTimeout);
+        wheelTimeout = setTimeout(() => {
+            if (e.deltaY > 0) {
+                scrollToSection(currentSectionIndex + 1);
+            } else {
+                scrollToSection(currentSectionIndex - 1);
+            }
+        }, 50); // Debounce scroll events
+    }, { passive: false });
+
+    // Update scroll indicators
+    const updateScrollIndicators = (activeIndex) => {
+        document.querySelectorAll('.scroll-indicator-dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeIndex);
+        });
+    };
+
+    // Create scroll progress indicator
+    const createScrollProgress = () => {
+        const progress = document.createElement('div');
+        progress.className = 'scroll-progress';
+        document.body.appendChild(progress);
+
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            progress.style.width = `${scrolled}%`;
+        });
+    };
+
+    // Create scroll controls UI
+    const createScrollControls = () => {
+        const controls = document.createElement('div');
+        controls.className = 'scroll-controls';
+        controls.innerHTML = `
+            <button class="scroll-up">↑</button>
+            <button class="scroll-down">↓</button>
+        `;
+        document.body.appendChild(controls);
+
+        controls.querySelector('.scroll-up').addEventListener('click', () => 
+            scrollToSection(currentSectionIndex - 1));
+        controls.querySelector('.scroll-down').addEventListener('click', () => 
+            scrollToSection(currentSectionIndex + 1));
+    };
+
+    createScrollProgress();
+    createScrollControls();
+
+    // Observer for current section
+    const observerOptions = {
+        root: null,
+        threshold: 0.5
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                currentSectionIndex = sectionsArray.indexOf(entry.target);
+                updateScrollIndicators(currentSectionIndex);
+            }
+        });
+    }, observerOptions);
+
+    sectionsArray.forEach(section => sectionObserver.observe(section));
 });
