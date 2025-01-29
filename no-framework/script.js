@@ -1,0 +1,165 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const elements = document.querySelectorAll('h1, p');
+    elements.forEach(element => {
+        element.classList.add('fade-in');
+    });
+
+    const button = document.querySelector('button');
+    if (button) {
+        button.addEventListener('click', () => {
+            alert('Button clicked!');
+        });
+    }
+
+    // Add slide-in animation to cards
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.2}s`;
+        card.classList.add('slide-in');
+    });
+
+    // Interactive buttons
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.innerHTML = '<span>Loading...</span>';
+            
+            setTimeout(() => {
+                this.innerHTML = 'Done!';
+                this.style.background = 'linear-gradient(45deg, #45a049 0%, #4CAF50 100%)';
+            }, 1000);
+        });
+    });
+
+    // Add parallax effect to cards
+    window.addEventListener('mousemove', (e) => {
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.transform = `perspective(1000px) rotateX(${(y - rect.height/2)/20}deg) rotateY(${-(x - rect.width/2)/20}deg)`;
+        });
+    });
+
+    // Animate statistics when in view
+    const stats = document.querySelectorAll('.stat-counter');
+    const animateStats = () => {
+        stats.forEach(stat => {
+            const value = parseInt(stat.innerText);
+            let current = 0;
+            const increment = value / 30;
+            const updateStats = () => {
+                if (current < value) {
+                    current += increment;
+                    stat.innerText = Math.round(current) + (stat.innerText.includes('%') ? '%' : '+');
+                    requestAnimationFrame(updateStats);
+                }
+            };
+            updateStats();
+        });
+    };
+
+    // Intersection Observer for stats animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                observer.disconnect();
+            }
+        });
+    });
+
+    if (stats.length) {
+        observer.observe(stats[0]);
+    }
+
+    // Dynamic background pattern movement on scroll
+    window.addEventListener('scroll', () => {
+        const offset = window.pageYOffset;
+        document.body.style.backgroundPosition = `${offset * 0.5}px ${offset * 0.5}px`;
+    });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Add active class to nav items on scroll
+    const sections = document.querySelectorAll('section, .content-grid, .testimonial');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('nav a').forEach(a => {
+            a.classList.remove('active');
+            if (a.getAttribute('href') === `#${current}`) {
+                a.classList.add('active');
+            }
+        });
+    });
+
+    // Highlight current page in navigation
+    const currentPage = window.location.pathname.split('/').pop();
+    document.querySelectorAll('nav a').forEach(link => {
+        if (link.getAttribute('href').includes(currentPage)) {
+            link.classList.add('active');
+        }
+    });
+
+    // Enhanced scroll behavior for all pages
+    const handleScroll = () => {
+        const sections = document.querySelectorAll('section, .content-grid, .testimonial');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 150) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
+
+    // Initialize animations for new elements
+    const initializeAnimations = () => {
+        document.querySelectorAll('.feature-box, .card').forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.2}s`;
+            element.classList.add('slide-in');
+        });
+    };
+
+    initializeAnimations();
+});
