@@ -1,0 +1,67 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    border-right: 60px solid lawngreen;
+    text-decoration: none;
+}
+
+
+nav{
+    background-color: lawngreen;
+    color: yellowgreen;
+    padding: 10px;
+    text-align: center;
+    size-adjust: auto;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    
+    
+}
+
+.dropdown a{
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+    float: block;
+    text-align: left;
+}
+
+.dropdown .Content{
+    display: none;
+    position: absolute;
+    background-color: green;
+    min-width: 100px;
+    box-shadow: 2px 2px 1px darkgreen;
+    border: none;
+
+}
+
+.dropdown:hover .Content{
+    display: block;
+    size: 10px;
+}
+
+.dropdown a:hover{
+    background-color: darkgreen;
+    color: brown;
+}
+
+button{
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: lawngreen;
+    text-decoration: none;
+    border: none;
+}
+
+button:hover{
+    background-color: rgba(63, 219, 63, 0.722);
+}
+
+/* Below me: Makes it when click on
+it stays active */
+.dropdown:focus-within .Content{
+    display: block;
+}
