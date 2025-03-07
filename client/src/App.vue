@@ -1,29 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Navbar from './components/Navbar.vue';
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">myActivity</RouterLink>
-        <RouterLink to="/about">friendsActivity</RouterLink>
-        <RouterLink to="/about">peoplesearch</RouterLink>
-        <RouterLink to="/about">Admin</RouterLink>
-        <RouterLink to="/about">User</RouterLink>
-        <RouterLink to="/about">signUp</RouterLink>
-        <RouterLink to="/about">logIn</RouterLink>
-        <RouterLink to="/about">X</RouterLink>
-      </nav>
-    </div>
+    <NavBar />
   </header>
 
-  <RouterView />
+  
 </template>
 
 <style scoped>
