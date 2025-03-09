@@ -8,6 +8,6 @@ const router = createRouter({
 
 if (import.meta.hot) { 
   handleHotUpdate(router) 
-} 
+}   
 
 export default router
