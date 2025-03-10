@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Navbar from '@/components/Navbar.vue'  // Fixed import path
+import Navbar from './components/Navbar.vue'  // Changed to relative path
 </script>
 
 <template>

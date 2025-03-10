@@ -1,80 +1,84 @@
 <script setup lang="ts">
-
-import { useAuthStore } from '@/stores/auth'
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
-
-const auth = useAuthStore()
-const isMenuActive = ref(false)
-
-function toggleMenu() {
-    isMenuActive.value = !isMenuActive.value
-}
-
-function handleLogout() {
-    auth.logout()
-}
+import {ref} from 'vue'
+import { RouterLink } from 'vue-router';
+const isActive = ref(false)
 </script>
 
 <template>
-    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <!-- Nav Bar in Bulma -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="container">
         <div class="navbar-brand">
-            <RouterLink class="navbar-item" to="/">
-                Workout Tracker
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample" 
+          :class="{ 'is-active': isActive }" @click="isActive = !isActive">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': isActive }">
+          <div class="navbar-start">
+            <RouterLink to="/" class="navbar-item">
+                <i class="fa-solid fa-house"></i>Home
+            </RouterLink>
+      
+            <RouterLink to="/MyActivity"  class="navbar-item" >
+                <i class="fa-solid fa-person-walking"></i>My Activity
             </RouterLink>
 
-            <a role="button" 
-               class="navbar-burger" 
-               :class="{ 'is-active': isMenuActive }" 
-               @click="toggleMenu"
-               aria-label="menu" 
-               aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
-        </div>
+            <RouterLink to="/FriendActivity" class="navbar-item" >
+                <i class="fa-solid fa-users-rectangle"></i>Friends Activity
+            </RouterLink>
 
-        <div class="navbar-menu" :class="{ 'is-active': isMenuActive }">
-            <div class="navbar-start">
-                <RouterLink class="navbar-item" to="/">My Activity</RouterLink>
-                <RouterLink class="navbar-item" to="/friends">Friend Activity</RouterLink>
-                <RouterLink v-if="auth.isAdmin" class="navbar-item" to="/admin/users">
-                    Manage Users
+            <RouterLink to="blank" class="navbar-item">
+                <i class="fa-solid fa-magnifying-glass"></i>People Search
+            </RouterLink>
+            
+            
+      
+            <div class="navbar-item has-dropdown is-hoverable">
+              <RouterLink to="/Admin" class="navbar-link" >
+                Admin
+              </RouterLink>
+      
+              <div class="navbar-dropdown">
+                <RouterLink to="/User" class="navbar-item">
+                  User
                 </RouterLink>
+              </div>
             </div>
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <template v-if="auth.isAuthenticated">
-                            <span class="navbar-item">Welcome, {{ auth.user?.value?.name }}</span>
-                            <a class="button is-light" @click="handleLogout">
-                                Log out
-                            </a>
-                        </template>
-                        <template v-else>
-                            <RouterLink class="button is-primary" to="/login">
-                                Log in
-                            </RouterLink>
-                        </template>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <RouterLink to="/SignUp" class="navbar-item">
+                  Sign up
+                </RouterLink>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <RouterLink to="/Login" class="button is-primary">
+                        <strong>Log in</strong>
+                    </RouterLink>
+            
+                    <div class="navbar-dropdown">
+                      <RouterLink to="/User" class="navbar-item">
+                        User
+                      </RouterLink>
                     </div>
-                </div>
+                  </div>
+                <RouterLink to="/" class="button is-primary" href="https://x.com/" target="_blank">
+                    Tweet X
+                </RouterLink>
+              </div>
             </div>
+          </div>
         </div>
-    </nav>
+      </div>
+      </nav>
 </template>
 
 <style scoped>
-.navbar {
-    margin-bottom: 2rem;
-}
 
-.navbar-item {
-    color: white;
-}
-
-.button.is-primary {
-    background-color: #485fc7;
-}
 </style>
