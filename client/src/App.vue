@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import Navbar from './components/Navbar.vue'  // Changed to relative path
+import NavBar from '@/components/NavBar.vue'  // Updated to use @ alias
 </script>
 
 <template>
     <header>
-        <Navbar />
+        <NavBar />
     </header>
 
     <main>
