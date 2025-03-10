@@ -48,7 +48,7 @@ function handleLogout() {
                 <div class="navbar-item">
                     <div class="buttons">
                         <template v-if="auth.isAuthenticated">
-                            <span class="navbar-item">Welcome, {{ auth.user?.name }}</span>
+                            <span class="navbar-item">Welcome, {{ auth.user?.value?.name }}</span>
                             <a class="button is-light" @click="handleLogout">
                                 Log out
                             </a>
