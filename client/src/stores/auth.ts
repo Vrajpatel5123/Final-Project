@@ -26,6 +26,6 @@ export function useAuthStore() {
     isAuthenticated,
     isAdmin,
     login,
-    logout
+    logout,
   }
 }
