@@ -1,33 +1,21 @@
 <script setup lang="ts">
-import {RouterView } from 'vue-router'
-import Navbar from './components/Navbar.vue'
-
-
-
+import { RouterView } from 'vue-router'
+import Navbar from '@/components/Navbar.vue'
 </script>
 
 <template>
-  <header>
-    <Navbar />
-  </header>
- <div class="container body-container">
+    <header>
+        <Navbar />
+    </header>
 
- </div>
-
-  <main>
-    <RouterView />
-  </main>
-  
-
-  
-  
-  
-
-
-
-  
-  
+    <main>
+        <RouterView />
+    </main>
 </template>
 
 <style scoped>
+main {
+    min-height: calc(100vh - 3.25rem);
+    background-color: black;
+}
 </style>
