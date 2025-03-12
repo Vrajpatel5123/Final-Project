@@ -24,8 +24,8 @@ onMounted(() => {
       <div class="content">
         <p>To access the fitness tracker and connect with friends, please log in:</p>
         <div class="buttons">
-          <RouterLink to="/login" class="button is-primary">Login</RouterLink>
-          <RouterLink to="/register" class="button is-info">Register</RouterLink>
+          <RouterLink to="/Login" class="button is-primary">Login</RouterLink>
+          <RouterLink to="/SignUp" class="button is-info">Register</RouterLink>
         </div>
       </div>
     </div>

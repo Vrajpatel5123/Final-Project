@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useUsers } from '../composables/useUsers'
+
 const isActive = ref(false)
+const { users, selectedUser, setSelectedUser } = useUsers()
 </script>
 
 <template>
@@ -62,7 +65,17 @@ const isActive = ref(false)
                 </RouterLink>
 
                 <div class="navbar-dropdown">
-                  <RouterLink to="/User" class="navbar-item"> User </RouterLink>
+                  <a 
+                    v-for="user in users" 
+                    :key="user.id"
+                    class="navbar-item"
+                    @click="setSelectedUser(user.id)"
+                  >
+                    {{ user.name }}
+                    <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
+                      {{ user.isAdmin ? 'Admin' : 'User' }}
+                    </span>
+                  </a>
                 </div>
               </div>
               <RouterLink to="/" class="button is-primary" href="https://x.com/" target="_blank">
@@ -76,4 +89,8 @@ const isActive = ref(false)
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.ml-2 {
+  margin-left: 0.5rem;
+}
+</style>
