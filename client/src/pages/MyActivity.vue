@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router'
 import { ref } from 'vue'
+import TodoList from '@/components/TodoList.vue'
 
 const workoutName = ref('')
 const workoutDate = ref('')
@@ -51,7 +52,13 @@ function addWorkout() {
 </script>
 
 <template>
-  <div class="container">
+  <section class="columns">
+            <div class="column is-half">
+              <TodoList />
+            </div>
+  
+
+  <div class="container column is-half">
     <!-- Centered Add Workout Button -->
     <div class="add-workout-button">
       <button class="button is-primary is-large" @click="toggleModal">Add Workout</button>
@@ -160,6 +167,7 @@ function addWorkout() {
       <button class="modal-close is-large" aria-label="close" @click="toggleModal"></button>
     </div>
   </div>
+</section>
 </template>
 
 <style scoped>

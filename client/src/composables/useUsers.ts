@@ -17,12 +17,18 @@ export function useUsers() {
   const selectedUser = ref<User | null>(null)
 
   const setSelectedUser = (userId: number) => {
-    selectedUser.value = users.value.find(user => user.id === userId) || null
+    const user = users.value.find(u => u.id === userId)
+    selectedUser.value = user || null
+  }
+
+  const logout = () => {
+    selectedUser.value = null
   }
 
   return {
     users,
     selectedUser,
-    setSelectedUser
+    setSelectedUser,
+    logout
   }
 }

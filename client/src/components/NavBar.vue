@@ -1,14 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref, computed } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { useUsers } from '../composables/useUsers'
 
 const isActive = ref(false)
-const { users, selectedUser, setSelectedUser } = useUsers()
+const router = useRouter()
+const { users, selectedUser, setSelectedUser, logout } = useUsers()
+
+const isLoggedIn = computed(() => selectedUser.value !== null)
+const isAdmin = computed(() => selectedUser.value?.isAdmin ?? false)
+
+const handleNavigation = (path: string) => {
+  if (!isLoggedIn.value) {
+    alert('Please log in first')
+    return
+  }
+  router.push(path)
+}
+
+const handleAdminAccess = () => {
+  if (!isLoggedIn.value) {
+    alert('Please log in first')
+    return
+  }
+  if (!isAdmin.value) {
+    alert('Admin access only')
+    return
+  }
+  router.push('/User')
+}
+
+const handleLogout = () => {
+  if (confirm('Are you sure you want to log out?')) {
+    logout()
+    router.push('/')
+  }
+}
 </script>
 
 <template>
-  <!-- Nav Bar in Bulma -->
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
@@ -34,23 +64,22 @@ const { users, selectedUser, setSelectedUser } = useUsers()
             <i class="fa-solid fa-house"></i>Home
           </RouterLink>
 
-          <RouterLink to="/MyActivity" class="navbar-item">
+          <a class="navbar-item" @click="handleNavigation('/MyActivity')" :class="{ 'is-disabled': !isLoggedIn }">
             <i class="fa-solid fa-person-walking"></i>My Activity
-          </RouterLink>
+          </a>
 
-          <RouterLink to="/FriendActivity" class="navbar-item">
+          <a class="navbar-item" @click="handleNavigation('/FriendActivity')" :class="{ 'is-disabled': !isLoggedIn }">
             <i class="fa-solid fa-users-rectangle"></i>Friends Activity
-          </RouterLink>
+          </a>
 
           <RouterLink to="blank" class="navbar-item">
             <i class="fa-solid fa-magnifying-glass"></i>People Search
           </RouterLink>
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <RouterLink to="/Admin" class="navbar-link"> Admin </RouterLink>
-
+          <div v-if="isAdmin" class="navbar-item has-dropdown is-hoverable">
+            <RouterLink to="/Admin" class="navbar-link">Admin</RouterLink>
             <div class="navbar-dropdown">
-              <RouterLink to="/User" class="navbar-item"> User </RouterLink>
+              <a class="navbar-item" @click="handleAdminAccess">User</a>
             </div>
           </div>
         </div>
@@ -58,23 +87,31 @@ const { users, selectedUser, setSelectedUser } = useUsers()
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <RouterLink to="/SignUp" class="navbar-item"> Sign up </RouterLink>
+              <RouterLink v-if="!isLoggedIn" to="/SignUp" class="navbar-item"> Sign up </RouterLink>
               <div class="navbar-item has-dropdown is-hoverable">
-                <RouterLink to="/Login" class="button is-primary">
+                <RouterLink v-if="!isLoggedIn" to="/Login" class="button is-primary">
                   <strong>Log in</strong>
                 </RouterLink>
+                <span v-else class="button is-primary">
+                  <strong>{{ selectedUser?.name }}</strong>
+                </span>
 
                 <div class="navbar-dropdown">
-                  <a 
-                    v-for="user in users" 
-                    :key="user.id"
-                    class="navbar-item"
-                    @click="setSelectedUser(user.id)"
-                  >
-                    {{ user.name }}
-                    <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
-                      {{ user.isAdmin ? 'Admin' : 'User' }}
-                    </span>
+                  <template v-if="!isLoggedIn">
+                    <a 
+                      v-for="user in users" 
+                      :key="user.id"
+                      class="navbar-item"
+                      @click="setSelectedUser(user.id)"
+                    >
+                      {{ user.name }}
+                      <!-- <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
+                        {{ user.isAdmin ? 'Admin' : 'User' }}
+                      </span> -->
+                    </a>
+                  </template>
+                  <a v-else class="navbar-item" @click="handleLogout">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
                   </a>
                 </div>
               </div>
@@ -92,5 +129,10 @@ const { users, selectedUser, setSelectedUser } = useUsers()
 <style scoped>
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>
