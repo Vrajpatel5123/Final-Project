@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/NavBar.vue' // Updated to use @ alias
+import SlidingDrawer from './components/SlidingDrawer.vue';
+import AddWorkout from './components/AddWorkout.vue';
+
 </script>
 
 <template>
@@ -11,6 +14,10 @@ import NavBar from '@/components/NavBar.vue' // Updated to use @ alias
   <main>
     <RouterView />
   </main>
+
+  <SlidingDrawer >
+    <AddWorkout />
+  </SlidingDrawer>
 </template>
 
 <style scoped>

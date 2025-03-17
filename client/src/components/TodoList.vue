@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { addNotification } from '../composables/notification'
+import NotificationList from './NotificationList.vue'
 
 interface Todo {
   id: number
@@ -14,6 +16,10 @@ const addTodo = () => {
     todos.value.push({
       id: Date.now(),
       text: newTodo.value
+    })
+    addNotification({
+      message: 'Todo created successfully!',
+      type: 'success'
     })
     newTodo.value = ''
   }
@@ -37,6 +43,7 @@ const deleteTodo = (id: number) => {
         <button @click="addTodo" class="button is-primary">Add</button>
       </div>
     </div>
+    <NotificationList />
     <div class="todos">
       <div v-for="todo in todos" :key="todo.id" class="todo">
         <span class="todo-text">{{ todo.text }}</span>
