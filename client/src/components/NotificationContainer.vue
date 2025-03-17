@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useNotifications } from '../composables/notification'
+import { refNotification } from '../composables/notification'
 
-const { notifications } = useNotifications()
+const notification = refNotification();
 </script>
 
 <template>
   <div class="notification-container">
-    <div v-for="notification in notifications" :key="notification.id" 
+    <div v-for="notification in notification" :key="notification.message" 
          :class="['notification', `is-${notification.type}`]">
       {{ notification.message }}
     </div>

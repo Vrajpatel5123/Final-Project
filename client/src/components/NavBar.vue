@@ -99,7 +99,7 @@ const handleAddWorkout = () => {
             <i class="fa-solid fa-users-rectangle"></i>Friends Activity
           </a>
 
-          <a @click="toggleDrawer" class="navbar-item">
+          <a class="navbar-item">
             <i class="fa-solid fa-magnifying-glass"></i>People Search
           </a>
 
