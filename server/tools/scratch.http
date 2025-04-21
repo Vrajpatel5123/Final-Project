@@ -24,3 +24,25 @@ Content-Type: application/json
     "todo": "Updated todo",
     "completed": true
 }
+
+######################
+####    USERS 
+######################
+
+###
+GET http://localhost:8000/api/v1/users
+
+###
+http://localhost:8000/api/v1/users/6
+
+###
+PATCH http://localhost:8000/api/v1/users/6
+Content-Type: application/json
+
+{
+    "firstName" : "Emily",
+    "lastName" : "Smith"
+}
+
+###
+DELETE http://localhost:8000/api/v1/users/6

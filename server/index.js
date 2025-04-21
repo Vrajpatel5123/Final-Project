@@ -1,5 +1,6 @@
 const express = require('express');
 const todolistController = require('./controllers/todos');
+const userController = require('./controllers/user');
 
     const PORT = 8000;
 
@@ -14,6 +15,7 @@ const todolistController = require('./controllers/todos');
         })
         
         .use("/api/v1/todos", todolistController)
+        .use("/api/v1/users", userController)
         .use('/', express.static('dist')) 
         
 
