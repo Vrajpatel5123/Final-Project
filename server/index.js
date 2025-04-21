@@ -5,13 +5,16 @@ const todolistController = require('./controllers/todos');
 
     const app = express();
 
+    app.use(express.json())
+
     app
     
         .get('/', (req, res) => {
             res.send('Hello New Paltz, Ny!!!');
         })
         
-        .use("/api/todos", todolistController)
+        .use("/api/v1/todos", todolistController)
+        .use('/', express.static('dist')) 
         
 
     app.listen(PORT, () => {

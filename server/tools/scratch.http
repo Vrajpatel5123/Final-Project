@@ -2,4 +2,25 @@
 
 
 ###
-http://localhost:8000/api/todos
+http://localhost:8000/api/v1/todos
+
+###
+GET http://localhost:8000/api/v1/todos/6
+
+###
+POST http://localhost:8000/api/v1/todos/
+Content-Type: application/json
+
+{
+    "todo": "This is todo",
+    "completed": true
+}
+
+###
+PATCH http://localhost:8000/api/v1/todos/6
+Content-Type: application/json
+
+{
+    "todo": "Updated todo",
+    "completed": true
+}

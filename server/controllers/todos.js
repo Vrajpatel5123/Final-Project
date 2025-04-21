@@ -21,6 +21,7 @@ router
             res.send(todo)
         }).catch(next)
     })
+
     .post('/', (req, res, next) => {
         const todo = req.body
         model.create(todo).then((newTodo) => {

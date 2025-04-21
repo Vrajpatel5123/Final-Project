@@ -2,6 +2,7 @@
 */
 
 const data = require('../data/todos.json');
+const { CustomError, statusCodes } = require('./errors')
 
 
 async function getAll () {
@@ -15,11 +16,10 @@ async function get(id) {
 
 async function create(todo){
     const newTodo = {
+        ...todo,
         id: data.items.length + 1,
-        title: todo.title,
-        completed: false
     }
-    data.push(newTodo);
+    data.items.push(newTodo);
     return newTodo;
 }
 
@@ -27,7 +27,7 @@ async function update(id, todo) {
     const index = data.items.findIndex((item) => item.id === id);
     if (index !== -1) {
         data.items[index] = { ...data.items[index], ...todo };
-        return data[index];
+        return data.items[index];
     }
     return null
 }
