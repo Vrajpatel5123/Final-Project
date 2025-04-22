@@ -25,6 +25,9 @@ Content-Type: application/json
     "completed": true
 }
 
+###
+DELETE http://localhost:8000/api/v1/todos/6
+
 ######################
 ####    USERS 
 ######################

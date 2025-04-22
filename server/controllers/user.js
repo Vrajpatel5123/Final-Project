@@ -16,7 +16,7 @@ router
         const id = parseInt(req.params.id)
         model.get(id).then((todo) => {
             if (!todo) {
-                return res.status(404).send({ error: 'Todo not found' })
+                return res.status(404).send({ error: 'User not found' })
             }
             res.send(todo)
         }).catch(next)
