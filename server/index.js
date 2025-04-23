@@ -10,7 +10,7 @@ const userController = require('./controllers/user');
 
     app
     
-        .get('/', (req, res) => {
+        .get('/hello', (req, res) => {
             res.send('Hello New Paltz, Ny!!!');
         })
         
