@@ -1,6 +1,7 @@
 const express = require('express');
 const todolistController = require('./controllers/todos');
 const userController = require('./controllers/user');
+require('dotenv').config()
 
     const PORT = 8000;
 

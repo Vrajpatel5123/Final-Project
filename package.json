@@ -13,7 +13,8 @@
   "dependencies": {
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "@supabase/supabase-js": "^2.49.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.9",

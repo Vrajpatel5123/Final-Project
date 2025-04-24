@@ -3,15 +3,32 @@
 
 const data = require('../data/todos.json');
 const { CustomError, statusCodes } = require('./errors')
+const {connect} = require('./supabase')
+
+const TABLE_NAME = 'todos'
+
+const isAdmin = true;
 
 
 async function getAll () {
-    return data;
+    const list = await connect().from(TABLE_NAME).select('*')
+    if(list.error){
+        throw error
+    }
+    return{
+        items: list.data
+    }
 }
 
 async function get(id) {
-    const todo = data.items.find((todo) => todo.id === id);
-    return todo;
+    const {data:items, error} = await connect().from(TABLE_NAME).select('*').eq('id', id)
+    if(!items.length){
+        throw new CustomError('Todo not found', statusCodes.NOT_FOUND)
+    }
+    if(error){
+        throw error
+    }
+    return items;
 }
 
 async function create(todo){
@@ -42,11 +59,17 @@ async function remove(id) {
     return null
 }
 
+async function seed(){
+
+}
+
 module.exports={
     getAll,
     get,
+    //search,
     create,
     update,
-    remove
+    remove,
+    seed
 }
 
