@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BASE_URL: ${{ github.event.repository.html_url }}
+      VITE_API_ROOT: #Point at my dynamic render website with the ending with /api/v1
 
     steps:
       - name: Checkout
@@ -51,7 +52,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: "."
+          path: "./dist"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
