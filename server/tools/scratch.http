@@ -29,7 +29,7 @@ Content-Type: application/json
 DELETE http://localhost:8000/api/v1/todos/2
 
 ###
-POST http://localhost:8000/api/v1/todos/seed
+GET http://localhost:8000/api/v1/todos/search/1
 
 ######################
 ####    USERS 
@@ -39,18 +39,18 @@ POST http://localhost:8000/api/v1/todos/seed
 GET http://localhost:8000/api/v1/users
 
 ###
-http://localhost:8000/api/v1/users/2
+http://localhost:8000/api/v1/users/3
 
 ###
-PATCH http://localhost:8000/api/v1/users/2
+PATCH http://localhost:8000/api/v1/users/1
 Content-Type: application/json
 
 {
-    "name": "Johnny"
+    "name": "Tommy"
 }
 
 ###
 DELETE http://localhost:8000/api/v1/users/6
 
 ###
-POST http://localhost:8000/api/v1/users/seed
+GET http://localhost:8000/api/v1/users/search/Charles?

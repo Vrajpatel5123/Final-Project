@@ -32,8 +32,10 @@ async function get(id) {
 }
 
 async function search(query){
+    console.log(query)
     const {data : items, error} = await connect().from(TABLE_NAME).select('*')
-    .or('title.ilike.%'+query+'%,description.ilike.%'+query+'%')
+    .or('name.ilike.%'+query+'%')
+    .select('*')
     if(error){
         throw error
     }
@@ -53,7 +55,7 @@ async function update(id, user) {
     if(!isAdmin){
         throw new CustomError('Unauthorized', statusCodes.UNAUTHORIZED)
     }
-    const {data: updatedUser, error} = await connect().from(TABLE_NAME).update(users).eq('id', id).select('*')
+    const {data: updatedUser, error} = await connect().from(TABLE_NAME).update(user).eq('id', id).select('*')
 
     if(error){
         throw error
@@ -74,36 +76,36 @@ async function remove(id) {
     
 }
 
-async function seed() {
+// async function seed() {
     
-    for(const item of data.items){
-        const insert = mapToDB(item)
-        console.log(insert)  
-        console.log("line break \n")
+//     for(const item of data.items){
+//         const insert = mapToDB(item)
+//         console.log(insert)  
+//         console.log("line break \n")
         
-        const {data: newUser, error} = await connect()
-        .from(TABLE_NAME)
-        .insert(insert)
-        .select('*');
+//         const {data: newUser, error} = await connect()
+//         .from(TABLE_NAME)
+//         .insert(insert)
+//         .select('*');
 
         
-        if(error){
-            throw error;
-        }
-    }
+//         if(error){
+//             throw error;
+//         }
+//     }
 
-    return { message: 'Seeded successfully to DB' };
-}
+//     return { message: 'Seeded successfully to DB' };
+// }
 
 
-function mapToDB(item) {
-    return {
-        id: item.id,
-        name: item.firstName,
-        email: item.email,
-        role: item.role
-    }
-}
+// function mapToDB(item) {
+//     return {
+//         id: item.id,
+//         name: item.firstName,
+//         email: item.email,
+//         role: item.role
+//     }
+// }
 
 module.exports={
     getAll,
@@ -112,6 +114,6 @@ module.exports={
     create,
     update,
     remove,
-    seed
+    // seed
 }
 

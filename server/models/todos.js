@@ -74,46 +74,46 @@ async function remove(id) {
     
 }
 
-async function seed() {
+// async function seed() {
     
-    for(const item of data.items){
-        const insert = mapToDB(item)
-        console.log(insert)  
-        console.log("line break \n")
+//     for(const item of data.items){
+//         const insert = mapToDB(item)
+//         console.log(insert)  
+//         console.log("line break \n")
 
-        const users = mapUserToDB(item.users, item.id)
+//         const users = mapUserToDB(item.users, item.id)
         
-        const {data: newTodo, error} = await connect()
-        .from(TABLE_NAME)
-        .insert(users)
-        .select('*');
+//         const {data: newTodo, error} = await connect()
+//         .from(TABLE_NAME)
+//         .insert(users)
+//         .select('*');
 
         
-        if(error){
-            throw error;
-        }
-    }
+//         if(error){
+//             throw error;
+//         }
+//     }
 
-    return { message: 'Seeded successfully to DB' };
-}
+//     return { message: 'Seeded successfully to DB' };
+// }
 
-function mapToDB(item) {
-    newItem = {
-        todo: item.todo,
-        completed: item.completed,
-        userId: item.userId,
-    }
-    return newItem
-}
+// function mapToDB(item) {
+//     newItem = {
+//         todo: item.todo,
+//         completed: item.completed,
+//         userId: item.userId,
+//     }
+//     return newItem
+// }
 
-function mapUserToDB(user, todo_id) {
-    return {
-        todo_id: todo_id,
-        firstName: user.firstName,
-        email: user.email,
-        isAdmin: user.isAdmin,
-    }
-}
+// function mapUserToDB(user, todo_id) {
+//     return {
+//         todo_id: todo_id,
+//         firstName: user.firstName,
+//         email: user.email,
+//         isAdmin: user.isAdmin,
+//     }
+// }
 
 module.exports={
     getAll,
@@ -122,6 +122,6 @@ module.exports={
     create,
     update,
     remove,
-    seed
+    // seed
 }
 

@@ -30,16 +30,16 @@ router
         }).catch(next)
     })
 
-    .post('/seed', (req,res,next) => {
-        const {data} = req.body
+    // .post('/seed', (req,res,next) => {
+    //     const {data} = req.body
 
-        model
-        .seed(data)
-        .then((data) => {
-            res.status(201).send(data);
-        })
-        .catch(next);
-    })
+    //     model
+    //     .seed(data)
+    //     .then((data) => {
+    //         res.status(201).send(data);
+    //     })
+    //     .catch(next);
+    // })
 
     .post('/', (req, res, next) => {
         const todo = req.body

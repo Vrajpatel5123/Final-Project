@@ -12,47 +12,45 @@ router
             res.send(data)
         }).catch(next)
     })
-    .get('/:id', (req, res, next) => {
-        const id = parseInt(req.params.id)
-        model.get(id).then((todo) => {
-            if (!todo) {
-                return res.status(404).send({ error: 'User not found' })
-            }
-            res.send(todo)
-        }).catch(next)
-    })
 
     .post('/', (req, res, next) => {
-        const todo = req.body
-        model.create(todo).then((newTodo) => {
-            res.status(201).send(newTodo)
+        const data = req.body
+        model.create(data).then((data) => {
+            res.status(201).send(data)
         }).catch(next)
     })
 
 
-    .patch('/:id', (req, res, next) => {
-        const id = parseInt(req.params.id)
-        const todo = req.body
-        model.update(id, todo).then((updatedTodo) => {
-            res.send(updatedTodo)
-        }).catch(next)
-    })
+    .get('/:id', (req, res, next) => {
+        const { id } = req.params
 
-     .post('/seed', (req,res,next) => {
-            const {data} = req.body
+        model.get(id).then((data) => {
+            res.send(data)
+        }).catch(next)
+
+    })
+    .get('/search/:query', (req, res, next) => {
+            const query = req.params
     
-            model
-            .seed(data)
-            .then((data) => {
-                res.status(201).send(data);
-            })
-            .catch(next);
+            model.search(query).then((user) => {
+                res.send(user)
+            }).catch(next)
         })
-        
+    //  .post('/seed', (req,res,next) => {
+    //         const {data} = req.body
+    
+    //         model
+    //         .seed(data)
+    //         .then((data) => {
+    //             res.status(201).send(data);
+    //         })
+    //         .catch(next);
+    //     })
+
     .delete('/:id', (req, res, next) => {
         const id = parseInt(req.params.id)
-        model.remove(id).then((deletedTodo) => {
-            res.send(deletedTodo)
+        model.remove(id).then((deletedUser) => {
+            res.send(deletedUser)
         }).catch(next)
     })
     
