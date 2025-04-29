@@ -10,14 +10,17 @@ require('dotenv').config()
     app.use(express.json())
 
     app
-    
-        .get('/hello', (req, res) => {
-            res.send('Hello New Paltz, Ny!!!');
-        })
         
         .use("/api/v1/todos", todolistController)
         .use("/api/v1/users", userController)
-        .use('/', express.static('dist')) 
+        .use('/', express.static('dist'))
+
+        // Error handling middleware
+        .use((err, req, res, next) => {
+            console.error(err);
+            res.status(500)
+            .send(err.message || 'Internal Server Error');
+        })
         
 
     app.listen(PORT, () => {

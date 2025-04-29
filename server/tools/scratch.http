@@ -5,7 +5,7 @@
 http://localhost:8000/api/v1/todos
 
 ###
-GET http://localhost:8000/api/v1/todos/6
+GET http://localhost:8000/api/v1/todos/2
 
 ###
 POST http://localhost:8000/api/v1/todos/
@@ -17,16 +17,19 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8000/api/v1/todos/6
+PATCH http://localhost:8000/api/v1/todos/2
 Content-Type: application/json
 
 {
-    "todo": "Updated todo",
+    "todo": "Workout 1/2 hour",
     "completed": true
 }
 
 ###
-DELETE http://localhost:8000/api/v1/todos/6
+DELETE http://localhost:8000/api/v1/todos/2
+
+###
+POST http://localhost:8000/api/v1/todos/seed
 
 ######################
 ####    USERS 
@@ -36,16 +39,18 @@ DELETE http://localhost:8000/api/v1/todos/6
 GET http://localhost:8000/api/v1/users
 
 ###
-http://localhost:8000/api/v1/users/6
+http://localhost:8000/api/v1/users/2
 
 ###
-PATCH http://localhost:8000/api/v1/users/6
+PATCH http://localhost:8000/api/v1/users/2
 Content-Type: application/json
 
 {
-    "firstName" : "Emily",
-    "lastName" : "Smith"
+    "name": "Johnny"
 }
 
 ###
 DELETE http://localhost:8000/api/v1/users/6
+
+###
+POST http://localhost:8000/api/v1/users/seed

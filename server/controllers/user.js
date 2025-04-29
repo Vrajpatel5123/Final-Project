@@ -37,6 +37,18 @@ router
             res.send(updatedTodo)
         }).catch(next)
     })
+
+     .post('/seed', (req,res,next) => {
+            const {data} = req.body
+    
+            model
+            .seed(data)
+            .then((data) => {
+                res.status(201).send(data);
+            })
+            .catch(next);
+        })
+        
     .delete('/:id', (req, res, next) => {
         const id = parseInt(req.params.id)
         model.remove(id).then((deletedTodo) => {

@@ -31,42 +31,94 @@ async function get(id) {
     return items;
 }
 
-async function create(todo){
-    const newTodo = {
-        ...todo,
-        id: data.items.length + 1,
+async function search(query){
+    const {data : items, error} = await connect().from(TABLE_NAME).select('*')
+    .or('title.ilike.%'+query+'%,description.ilike.%'+query+'%')
+    if(error){
+        throw error
     }
-    data.items.push(newTodo);
+    return items
+}
+
+async function create(todo){
+    const {data: newTodo, error} = await connect().from(TABLE_NAME).insert(todo).select('*')
+    if(error){
+        throw error
+    }
+    
     return newTodo;
 }
 
 async function update(id, todo) {
-    const index = data.items.findIndex((item) => item.id === id);
-    if (index !== -1) {
-        data.items[index] = { ...data.items[index], ...todo };
-        return data.items[index];
+    if(!isAdmin){
+        throw new CustomError('Unauthorized', statusCodes.UNAUTHORIZED)
     }
-    return null
+    const {data: updatedTodo, error} = await connect().from(TABLE_NAME).update(todo).eq('id', id).select('*')
+
+    if(error){
+        throw error
+    }
+
+    return updatedTodo;
 }
 
 async function remove(id) {
-    const index = data.items.findIndex((t) => t.id === id);
-    if (index !== -1) {
-        const deletedTodo = data.items[index];
-        data.items.splice(index, 1);
-        return deletedTodo;
+    if(!isAdmin){
+        throw new CustomError('Unauthorized', statusCodes.UNAUTHORIZED)
     }
-    return null
+    const {data: deletedTodo, error} = await connect().from(TABLE_NAME).delete().eq('id', id)
+    if(error){
+        throw error
+    }
+    return deletedTodo;
+    
 }
 
-async function seed(){
+async function seed() {
+    
+    for(const item of data.items){
+        const insert = mapToDB(item)
+        console.log(insert)  
+        console.log("line break \n")
 
+        const users = mapUserToDB(item.users, item.id)
+        
+        const {data: newTodo, error} = await connect()
+        .from(TABLE_NAME)
+        .insert(users)
+        .select('*');
+
+        
+        if(error){
+            throw error;
+        }
+    }
+
+    return { message: 'Seeded successfully to DB' };
+}
+
+function mapToDB(item) {
+    newItem = {
+        todo: item.todo,
+        completed: item.completed,
+        userId: item.userId,
+    }
+    return newItem
+}
+
+function mapUserToDB(user, todo_id) {
+    return {
+        todo_id: todo_id,
+        firstName: user.firstName,
+        email: user.email,
+        isAdmin: user.isAdmin,
+    }
 }
 
 module.exports={
     getAll,
     get,
-    //search,
+    search,
     create,
     update,
     remove,
