@@ -14,10 +14,11 @@ export function useAuthStore() {
     isAuthenticated.value = true
   }
 
-  const logout = () => {
+const logout = () => {
     user.value = null
     isAuthenticated.value = false
   }
+  
 
   const isAdmin = computed(() => user.value?.isAdmin ?? false)
 
@@ -28,4 +29,5 @@ export function useAuthStore() {
     login,
     logout,
   }
+
 }

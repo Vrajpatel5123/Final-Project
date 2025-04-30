@@ -2,7 +2,7 @@ import type { DataListEnvelope } from "./dataEnvelopes";
 import { api } from "@/composables/session";
 
 export interface User{
-    id: string
+    id: number
     firstName: string
     role: string
 }
