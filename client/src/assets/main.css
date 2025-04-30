@@ -2,6 +2,6 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css";
 @import "buefy/dist/buefy.css";
 
-.title:not(.is-spaced){
-    margin-top: 0rem;
+.title:not(.is-spaced)+.subtitle {
+    margin-top: 2 rem;
 }

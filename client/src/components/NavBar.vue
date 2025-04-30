@@ -125,7 +125,7 @@ const handleAddWorkout = () => {
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="buttons">
+            <!--<div class="buttons">
               <RouterLink v-if="!isLoggedIn" to="/SignUp" class="navbar-item"> Sign up </RouterLink>
               <div class="navbar-item has-dropdown is-hoverable">
                 <RouterLink v-if="!isLoggedIn" to="/Login" class="button is-primary">
@@ -144,16 +144,16 @@ const handleAddWorkout = () => {
                       @click="setSelectedUser(user.id)"
                     >
                       {{ user.name }}
-                      <!-- <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
+                       <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
                         {{ user.isAdmin ? 'Admin' : 'User' }}
-                      </span> -->
+                      </span> 
                     </a>
                   </template>
                   <a v-else class="navbar-item" @click="handleLogout">
                     <i class="fa-solid fa-right-from-bracket"></i> Logout
                   </a>
                 </div>
-              </div>
+              </div> -->
               <loginBadge />
               <RouterLink to="/" class="button is-primary" href="https://x.com/" target="_blank">
                 Tweet X
@@ -162,7 +162,6 @@ const handleAddWorkout = () => {
           </div>
         </div>
       </div>
-    </div>
   </nav>
 
   <div class="drawer" :class="{ 'is-active': isDrawerActive }">
