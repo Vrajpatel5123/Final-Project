@@ -2,12 +2,14 @@
  */
 
 import productsData from '../data/todos.json'
+import type { DataListEnvelope } from './dataEnvelopes'
+import { api } from '@/composables/session'
 
 interface ProductsData {
   items: todo[] 
 }
 
-interface todo{
+export interface todo{
   id: number;
   todo: string;
   completed: boolean;
@@ -15,15 +17,15 @@ interface todo{
 }
 
 const products: ProductsData = productsData as ProductsData
- import type { DataListEnvelope } from './dataEnvelopes'
+ 
  
  
  export function getAll() {
-   return products as DataListEnvelope<todo>
+   return api<DataListEnvelope<todo>>('/todos')
  }
  
  export function getOne(id: string) {
-   return products.items.find((item) => item.id == +id) as todo
+   return api<todo>(`/todos/${id}`)
    //created product inside product.ts to not cause an error
  }
  

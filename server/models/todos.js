@@ -28,12 +28,12 @@ async function get(id) {
     if(error){
         throw error
     }
-    return items;
+    return items[0];
 }
 
 async function search(query){
     const {data : items, error} = await connect().from(TABLE_NAME).select('*')
-    .or('title.ilike.%'+query+'%,description.ilike.%'+query+'%')
+    .or('todo.ilike.%'+query+'%,todo.ilike.%'+query+'%')
     if(error){
         throw error
     }

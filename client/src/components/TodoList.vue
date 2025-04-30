@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { addNotification } from '../composables/notification'
 import NotificationList from './NotificationList.vue'
+import { getOne, type todo } from '@/stores/product'
 
 interface Todo {
   id: number
   text: string
 }
 
+const route = useRoute()
 const newTodo = ref('')
 const todos = ref<Todo[]>([])
+const Todo = ref<todo>();
+
+getOne(String((route.params as { id: number }).id)).then((response) =>{
+  Todo.value = response;
+})
 
 const addTodo = () => {
   if (newTodo.value.trim()) {

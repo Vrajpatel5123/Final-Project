@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSession } from '@/composables/useSession';
+import {type DataListEnvelope} from '@/stores/dataEnvelopes'
+import { getAll,type todo } from '@/stores/product'
+
 
 const router = useRouter();
 const { user } = useSession();
@@ -13,6 +16,14 @@ onMounted(() => {
   }
   isLoading.value = false;
 });
+
+const todos = ref({} as DataListEnvelope<todo>)
+
+
+getAll()
+  .then((response) => {
+    todos.value = response
+  })
 </script>
 
 <template>

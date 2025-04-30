@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TodoList from '@/components/TodoList.vue'
-import AddWorkout from '@/components/AddWorkout.vue'
+// import AddWorkout from '@/components/AddWorkout.vue'
 import { useWorkouts } from '../composables/useWorkouts'
 
 const { workouts } = useWorkouts()

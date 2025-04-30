@@ -4,6 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import { useUsers } from '../composables/useUsers'
 import AddWorkout from './AddWorkout.vue'
 import { useWorkouts } from '../composables/useWorkouts'
+import loginBadge from './loginBadge.vue'
 
 const isActive = ref(false)
 const isModalActive = ref(false)
@@ -153,6 +154,7 @@ const handleAddWorkout = () => {
                   </a>
                 </div>
               </div>
+              <loginBadge />
               <RouterLink to="/" class="button is-primary" href="https://x.com/" target="_blank">
                 Tweet X
               </RouterLink>
