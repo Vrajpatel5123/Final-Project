@@ -3,7 +3,7 @@ const todolistController = require('./controllers/todos');
 const userController = require('./controllers/user');
 require('dotenv').config()
 
-    const PORT = 8000;
+    const PORT = process.env.PORT || 8000;
 
     const app = express();
 
@@ -18,14 +18,18 @@ require('dotenv').config()
           return res.sendStatus(200)
      }
      next()
-    })
-
+    })    
     app.use(express.json())
       app
         
         .use("/api/v1/todos", todolistController)
         .use("/api/v1/users", userController)
-        .use('/', express.static('../client/dist'))
+        .use('/', express.static('client/dist'))
+        
+        // SPA history mode - This needs to be after API routes but before error handling
+        .get('*', (req, res) => {
+          res.sendFile('index.html', { root: 'client/dist' });
+        })
 
         // Error handling middleware
         .use((err, req, res, next) => {
