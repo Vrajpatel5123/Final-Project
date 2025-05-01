@@ -21,12 +21,11 @@ require('dotenv').config()
     })
 
     app.use(express.json())
-    
-    app
+      app
         
         .use("/api/v1/todos", todolistController)
         .use("/api/v1/users", userController)
-        .use('/', express.static('dist'))
+        .use('/', express.static('../client/dist'))
 
         // Error handling middleware
         .use((err, req, res, next) => {
