@@ -1,5 +1,4 @@
-/* B"H
- */
+
 
 import productsData from '../data/todos.json'
 import type { DataListEnvelope } from './dataEnvelopes'

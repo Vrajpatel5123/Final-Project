@@ -2,6 +2,103 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css";
 @import "buefy/dist/buefy.css";
 
+/* Global theme variables are defined in App.vue */
+
+/* Theme-aware overrides for Bulma classes */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.title, .subtitle {
+  color: var(--text-primary);
+}
+
+.content {
+  color: var(--text-secondary);
+}
+
+.input, .textarea, .select select {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.input:focus, .textarea:focus, .select select:focus {
+  box-shadow: 0 0 0 2px var(--accent);
+  border-color: var(--accent);
+}
+
+.button {
+  transition: all 0.3s ease;
+}
+
+.button.is-primary {
+  background-color: var(--accent);
+}
+
+.button.is-primary:hover {
+  background-color: var(--accent);
+  opacity: 0.9;
+}
+
+/* Animation classes */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
 .title:not(.is-spaced)+.subtitle {
-    margin-top: 2 rem;
+  margin-top: 2rem;
+}
+
+/* Improved Tables */
+table {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+table th {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+table tr:hover {
+  background-color: var(--button-hover);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  opacity: 0.8;
 }

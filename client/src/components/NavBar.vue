@@ -19,7 +19,6 @@ const isAdmin = computed(() => selectedUser.value?.isAdmin ?? false)
 
 const handleNavigation = (path: string) => {
   if (!isLoggedIn.value) {
-    alert('Please log in first')
     return
   }
   router.push(path)
@@ -27,21 +26,17 @@ const handleNavigation = (path: string) => {
 
 const handleAdminAccess = () => {
   if (!isLoggedIn.value) {
-    alert('Please log in first')
     return
   }
   if (!isAdmin.value) {
-    alert('Admin access only')
     return
   }
   router.push('/User')
 }
 
 const handleLogout = () => {
-  if (confirm('Are you sure you want to log out?')) {
     logout()
     router.push('/')
-  }
 }
 
 const toggleModal = () => {
@@ -59,7 +54,6 @@ const toggleAddForm = () => {
 
 const handleAddWorkout = () => {
   if (!isLoggedIn.value) {
-    alert('Please log in first')
     return
   }
   toggleAddForm()
@@ -125,7 +119,7 @@ const handleAddWorkout = () => {
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <!--<div class="buttons">
+            <div class="buttons">
               <RouterLink v-if="!isLoggedIn" to="/SignUp" class="navbar-item"> Sign up </RouterLink>
               <div class="navbar-item has-dropdown is-hoverable">
                 <RouterLink v-if="!isLoggedIn" to="/Login" class="button is-primary">
@@ -143,25 +137,24 @@ const handleAddWorkout = () => {
                       class="navbar-item"
                       @click="setSelectedUser(user.id)"
                     >
-                      {{ user.name }}
-                       <span class="tag is-small ml-2" :class="user.isAdmin ? 'is-success' : 'is-info'">
-                        {{ user.isAdmin ? 'Admin' : 'User' }}
-                      </span> 
+                      {{ user.name }} 
                     </a>
                   </template>
                   <a v-else class="navbar-item" @click="handleLogout">
                     <i class="fa-solid fa-right-from-bracket"></i> Logout
                   </a>
                 </div>
-              </div> -->
-              <loginBadge />
+              </div>
+               <!-- <loginBadge /> -->
               <RouterLink to="/" class="button is-primary" href="https://x.com/" target="_blank">
                 Tweet X
               </RouterLink>
             </div>
           </div>
         </div>
+        
       </div>
+    </div>
   </nav>
 
   <div class="drawer" :class="{ 'is-active': isDrawerActive }">

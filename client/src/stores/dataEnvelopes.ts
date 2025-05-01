@@ -1,5 +1,3 @@
-/* B"H
- */
 
 export interface DataListEnvelope<T> {
     items: T[]

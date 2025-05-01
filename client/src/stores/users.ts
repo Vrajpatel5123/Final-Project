@@ -3,16 +3,18 @@ import { api } from "@/composables/session";
 
 export interface User{
     id: number
-    firstName: string
-    role: string
+    name: string
+    isAdmin: boolean
+    email: string
+    created_at: string
 }
 
 export function getAll(): Promise<DataListEnvelope<User>> {
-    return api('users')
+    return api<DataListEnvelope<User>>('users')
 }
 
 export function get(id: string): Promise<User>{
-    return api(`users/${id}`)
+    return api<DataListEnvelope<User>>(`users/${id}`).then(response => response as unknown as User)
 }
 
 export function searchUser(

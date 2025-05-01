@@ -2,7 +2,7 @@ import { ref } from "vue"
 
 export interface Notification {
     message: string
-    type: 'success' | 'error' | 'warning' | 'info'
+    type: 'success' | 'danger' | 'warning' | 'info'
 }
 
 const notifications = ref<Notification[]>([])

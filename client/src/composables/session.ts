@@ -14,7 +14,7 @@ export function refSession(){
     return session
 }
 
-export const isAdmin = () => session.value?.user?.role === 'admin'
+export const isAdmin = () => session.value?.user?.isAdmin === true
 
 export const isLoggedIn = () => session.value?.user !== null
 
