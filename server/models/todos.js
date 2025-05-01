@@ -1,117 +1,49 @@
+const data = require('../data/todos.json');
 const { CustomError, statusCodes } = require('./errors')
-const { connect } = require('./supabase')
+const {connect} = require('./supabase')
 
 const TABLE_NAME = 'todos'
 
-/**
- * Gets all todos with pagination support
- * @param {number} page - Page number (default: 1)
- * @param {number} limit - Items per page (default: 10)
- * @param {number} userId - Optional user ID filter
- * @returns {Promise<Object>} - Returns paginated todos with count
- */
-async function getAll(page = 1, limit = 10, userId = null) {
-    const offset = (page - 1) * limit
-    
-    let query = connect().from(TABLE_NAME).select('*', { count: 'exact' })
-    
-    // Filter by userId if provided
-    if (userId) {
-        query = query.eq('userId', userId)
-    }
+const isAdmin = true;
 
-    const { data, error, count } = await query
-        .order('id', { ascending: false })
-        .range(offset, offset + limit - 1)
-    
-    if (error) {
-        throw new CustomError(error.message, statusCodes.INTERNAL_SERVER_ERROR)
+
+async function getAll () {
+    const list = await connect().from(TABLE_NAME).select('*')
+    if(list.error){
+        throw error
     }
-    
-    return {
-        items: data || [],
-        total: count || 0,
-        page,
-        limit,
-        totalPages: Math.ceil((count || 0) / limit)
+    return{
+        items: list.data
     }
 }
 
-/**
- * Get a single todo by id
- * @param {number} id - Todo ID
- * @returns {Promise<Object>} - Returns the requested todo
- */
 async function get(id) {
-    const { data, error } = await connect()
-        .from(TABLE_NAME)
-        .select('*')
-        .eq('id', id)
-        .single()
-    
-    if (error) {
-        if (error.code === 'PGRST116') {
-            throw new CustomError('Todo not found', statusCodes.NOT_FOUND)
-        }
-        throw new CustomError(error.message, statusCodes.INTERNAL_SERVER_ERROR)
+    const {data:items, error} = await connect().from(TABLE_NAME).select('*').eq('id', id)
+    if(!items.length){
+        throw new CustomError('Todo not found', statusCodes.NOT_FOUND)
     }
-    
-    return data
+    if(error){
+        throw error
+    }
+    return items[0];
 }
 
-/**
- * Search todos by query string
- * @param {string} query - Search query
- * @returns {Promise<Array>} - Returns matching todos
- */
-async function search(query) {
-    const searchTerm = `%${query}%`
-    const { data, error } = await connect()
-        .from(TABLE_NAME)
-        .select('*')
-        .ilike('todo', searchTerm)
-    
-    if (error) {
-        throw new CustomError(error.message, statusCodes.INTERNAL_SERVER_ERROR)
+async function search(query){
+    const {data : items, error} = await connect().from(TABLE_NAME).select('*')
+    .or('todo.ilike.%'+query+'%,todo.ilike.%'+query+'%')
+    if(error){
+        throw error
     }
-    
-    return {
-        items: data || [],
-        total: data?.length || 0
-    }
+    return items
 }
 
-/**
- * Create a new todo
- * @param {Object} todo - Todo object to create
- * @returns {Promise<Object>} - Returns the created todo
- */
-async function create(todo) {
-    if (!todo.todo) {
-        throw new CustomError('Todo text is required', statusCodes.BAD_REQUEST)
+async function create(todo){
+    const {data: newTodo, error} = await connect().from(TABLE_NAME).insert(todo).select('*')
+    if(error){
+        throw error
     }
     
-    if (todo.userId === undefined) {
-        throw new CustomError('userId is required', statusCodes.BAD_REQUEST)
-    }
-
-    // Set default values if not provided
-    const todoToCreate = {
-        ...todo,
-        completed: todo.completed === undefined ? false : todo.completed
-    }
-    
-    const { data, error } = await connect()
-        .from(TABLE_NAME)
-        .insert(todoToCreate)
-        .select()
-        .single()
-    
-    if (error) {
-        throw new CustomError(error.message, statusCodes.INTERNAL_SERVER_ERROR)
-    }
-    
-    return data
+    return newTodo;
 }
 
 async function update(id, todo) {
