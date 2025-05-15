@@ -25,7 +25,32 @@ const friendActivities = ref([
     location: 'Zen Studio',
     type: 'flexibility',
     friend: 'Emma Davis'
+  },
+  {
+    name: 'Cycling',
+    duration: '90 minutes',
+    date: '2025-04-30',
+    location: 'City Park',
+    type: 'Cardio',
+    friend: 'John Smith'
+  },
+  {
+    name: 'Pilates Class',
+    duration: '50 minutes',
+    date: '2025-05-01',
+    location: 'Wellness Studio',
+    type: 'Flexibility',
+    friend: 'Jane Doe'
+  },
+  {
+    name: 'Hiking Trip',
+    duration: '3 hours',
+    date: '2025-05-03',
+    location: 'Mountain Trail',
+    type: 'Strength',
+    friend: 'Bob Green'
   }
+
 ])
 </script>
 

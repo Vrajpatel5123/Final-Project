@@ -8,12 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@oruga-ui/oruga':
+        specifier: ^0.7.0
+        version: 0.7.0
       '@supabase/supabase-js':
         specifier: ^2.49.4
         version: 2.49.4
       buefy:
         specifier: npm:@ntohq/buefy-next@^0.2.0
-        version: '@ntohq/buefy-next@0.2.0(vue@3.5.13(typescript@5.7.3))'
+        version: '@ntohq/buefy-next@0.2.0'
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -39,6 +42,12 @@ importers:
       '@fortawesome/fontawesome-free':
         specifier: ^6.7.2
         version: 6.7.2
+      '@oruga-ui/oruga-next':
+        specifier: ^0.7.0
+        version: 0.7.0(vue@3.5.13(typescript@5.7.3))
+      '@oruga-ui/theme-oruga':
+        specifier: ^0.6.0
+        version: 0.6.0(@oruga-ui/oruga-next@0.7.0(vue@3.5.13(typescript@5.7.3)))
       '@vueuse/core':
         specifier: ^12.8.2
         version: 12.8.2(typescript@5.7.3)
@@ -512,6 +521,22 @@ packages:
     resolution: {integrity: sha512-I8/8eM2eOxZCl5igqYn274fpbgpJEPWGULvVDOXdT2WOaiWA8AHQPsT9WfknW3DENuYEWyMzKTyVI74R/Yl3BA==}
     peerDependencies:
       vue: ^3.0.0
+
+  '@oruga-ui/oruga-next@0.7.0':
+    resolution: {integrity: sha512-T2KnNhGzgqv/Xzu4Efx3wnYahANcP6Z7Yc8DHOFIOLrM+ZDdTS9OjL3gofBVDrDBRg1DQv6EvsSsNkwMR88LpA==}
+    peerDependencies:
+      vue: ^3.0.0
+
+  '@oruga-ui/oruga@0.7.0':
+    resolution: {integrity: sha512-rJELN5vZGXZVuIXC8Vdi/3sfU/8LqH4aoEEeBKZ9hu4+skKjF0/bjZHgrH3dEriuckRBU3Q4D3pdaKVR7/o9oA==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    peerDependencies:
+      vue: ^2.6.11
+
+  '@oruga-ui/theme-oruga@0.6.0':
+    resolution: {integrity: sha512-Rr/FS30JvaxYau0r40y2kMZ0nQMqlDMVXDx27htw2c6FZJVwFZZo/ldlTbrC5gBBlVY1bGXq1uiwobZlocLAoQ==}
+    peerDependencies:
+      '@oruga-ui/oruga-next': ^0.10.0
 
   '@pkgr/core@0.2.4':
     resolution: {integrity: sha512-ROFF39F6ZrnzSUEmQQZUar0Jt4xVoP9WnDRdWwF4NNcXs3xBTLgBUDoOwW141y1jP+S8nahIbdxbFC7IShw9Iw==}
@@ -2948,11 +2973,19 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@ntohq/buefy-next@0.2.0(vue@3.5.13(typescript@5.7.3))':
-    dependencies:
-      vue: 3.5.13(typescript@5.7.3)
+  '@ntohq/buefy-next@0.2.0':
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu': 4.6.1
+
+  '@oruga-ui/oruga-next@0.7.0(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      vue: 3.5.13(typescript@5.7.3)
+
+  '@oruga-ui/oruga@0.7.0': {}
+
+  '@oruga-ui/theme-oruga@0.6.0(@oruga-ui/oruga-next@0.7.0(vue@3.5.13(typescript@5.7.3)))':
+    dependencies:
+      '@oruga-ui/oruga-next': 0.7.0(vue@3.5.13(typescript@5.7.3))
 
   '@pkgr/core@0.2.4': {}
 

@@ -3,7 +3,9 @@ import TodoList from '@/components/TodoList.vue'
 // import AddWorkout from '@/components/AddWorkout.vue'
 import { useWorkouts } from '../composables/useWorkouts'
 
+
 const { workouts } = useWorkouts()
+
 </script>
 
 <template>
@@ -32,6 +34,8 @@ const { workouts } = useWorkouts()
       </div>
     </div>
   </section>
+
+
 </template>
 
 <style scoped>

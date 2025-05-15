@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router'
 import { addNotification } from '../composables/notification'
 import NotificationList from './NotificationList.vue'
 import { getOne, type todo } from '@/stores/product'
+import { search, type Product } from '@/models/todos';
+
 
 interface Todo {
   id: number
@@ -54,7 +56,26 @@ const toggleComplete = (id: number) => {
     })
   }
 }
+
+
+const suggestions = ref([
+    { label: 'Walking', value: '1' },
+    { label: 'Running', value: '2' },
+    { label: 'Cycling', value: '3' },
+    { label: 'WeightWorkout', value: '4' }
+])
+
+const selectedWorkout = ref('')
+async function getAsyncData(value: string) {
+
+    const response = await search(value);
+    selectedWorkout.value = response.items.map((items) => ({
+        value: items,
+        label: items.title
+    }));
+}
 </script>
+
 
 <template>
   <div class="todo-container">
@@ -80,6 +101,40 @@ const toggleComplete = (id: number) => {
               type="text" 
               placeholder="What needs to be done?" 
             />
+             <o-autocomplete
+                v-model="selectedWorkout"
+                :options="suggestions"
+                option-value="id"
+                option-label="title"
+                option-thumbnail="thumbnail"
+                expanded
+                 backend-filtering
+                :debounce="500"
+                @input="getAsyncData"
+                input="Select a product"
+                icon="search"
+                clearable
+                @keyup.enter="addTodo"
+                open-on-focus>
+              </o-autocomplete>
+              <template #default="{ value }">
+                <div class="media">
+                    <div class="media-left">
+                        <img
+                              width="32"
+                              :src="value.thumbnail" />
+                    </div>
+                    <div class="media-content">
+                        {{ value.title }}
+                        <br />
+                        <small>
+                            {{ value.description }}
+                        </small>
+                    </div>
+                </div>
+            </template>
+                                  
+            
           </div>
           <div class="control">
             <button @click="addTodo" class="button is-primary">

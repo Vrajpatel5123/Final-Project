@@ -53,6 +53,24 @@ const demoWorkouts: Workout[] = [
     location: 'Fitness Center',
     type: 'Cardio',
     userId: 3
+  },
+  {
+    id: 5,
+    name: 'Cycling',
+    duration: '90 minutes',
+    date: '2025-04-30',
+    location: 'City Park',
+    type: 'Cardio',
+    userId: 2
+  },
+  {
+    id: 6,
+    name: 'Pilates Class',
+    duration: '50 minutes',
+    date: '2025-05-01',
+    location: 'Wellness Studio',
+    type: 'Flexibility',
+    userId: 3
   }
 ]
 
